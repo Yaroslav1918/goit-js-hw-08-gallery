@@ -74,8 +74,7 @@ const LightBoxEl = document.querySelector('.js-lightbox');
 const LightImgEl = document.querySelector('.lightbox__image');
 const LightButtonEl = document.querySelector('.lightbox__button[data-action="close-lightbox"]');
 LightButtonEl.addEventListener('click', onCloseModal);
-document.addEventListener('keydown', onCloseModalByEscp);
- 
+
 
 
 
@@ -101,8 +100,9 @@ function makeGalleryItem(item) {
 
 function onCloseModalByEscp(e) {
   if (e.keyCode == 27) {
+  
  onCloseModal()
-
+ 
 }
 };
 
@@ -116,11 +116,14 @@ function onImgClick(e) {
   onOpenModal()
   const swatchedEl = e.target.dataset.source;
   LightImgEl.src = swatchedEl;
-
+  document.addEventListener('keydown', onCloseModalByEscp);
+  document.addEventListener('keydown', onPressArrow);
 };
 function onCloseModal() {
   LightBoxEl.classList.remove('is-open');
   removeSrcImg()
+  document.removeEventListener('keydown', onCloseModalByEscp);
+  document.removeEventListener('keydown', onPressArrow);
 };
 
 function onOpenModal() {
@@ -131,4 +134,15 @@ function removeSrcImg() {
   LightImgEl.src = '';
 };
 
-
+const onPressArrow = e => {
+  let activeIndex = galleryItems.findIndex(image => image.original === LightImgEl.src);
+  
+  if (e.code === 'ArrowRight') {
+    activeIndex < galleryItems.length - 1 ? (activeIndex += 1) : 0;
+  }
+  if (e.code === 'ArrowLeft') {
+    activeIndex > 0 ? (activeIndex -= 1) : galleryItems.length -1
+  }
+  LightImgEl.src = galleryItems[activeIndex].original;
+  LightImgEl.alt = galleryItems[activeIndex].alt;
+}
