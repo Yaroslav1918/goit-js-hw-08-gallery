@@ -116,14 +116,14 @@ function onImgClick(e) {
   onOpenModal()
   const swatchedEl = e.target.dataset.source;
   LightImgEl.src = swatchedEl;
-  document.addEventListener('keydown', onCloseModalByEscp);
-  document.addEventListener('keydown', onPressArrow);
+  window.addEventListener('keydown', onCloseModalByEscp);
+  window.addEventListener('keydown', onPressArrow);
 };
 function onCloseModal() {
   LightBoxEl.classList.remove('is-open');
   removeSrcImg()
-  document.removeEventListener('keydown', onCloseModalByEscp);
-  document.removeEventListener('keydown', onPressArrow);
+  window.removeEventListener('keydown', onCloseModalByEscp);
+  window.removeEventListener('keydown', onPressArrow);
 };
 
 function onOpenModal() {
